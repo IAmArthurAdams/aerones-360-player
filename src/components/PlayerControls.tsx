@@ -4,11 +4,13 @@ type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
   isMuted: boolean;
   setIsMuted: () => void;
+  videoSrc?: string;
 };
 
 export const PlayerControls: React.FC<Props> = ({
   videoRef,
   isMuted,
+  videoSrc,
   setIsMuted,
 }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -33,6 +35,10 @@ export const PlayerControls: React.FC<Props> = ({
       setIsPlaying(false);
     }
   }, [videoRef]);
+
+  if (!videoSrc) {
+    return null;
+  }
 
   return (
     <div

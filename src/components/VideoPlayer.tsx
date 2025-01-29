@@ -3,21 +3,14 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { VideoSphere } from "./VideoSphere";
 import { PlayerControls } from "./PlayerControls";
+import { VideoUploader } from "./VideoUploader";
 
 export const VideoPlayer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const [isVideoReady, setIsVideoReady] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
-
   const [videoSrc, setVideoSrc] = useState<string | undefined>(undefined);
-  const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const videoUrl = URL.createObjectURL(file);
-      setVideoSrc(videoUrl);
-    }
-  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -42,12 +35,7 @@ export const VideoPlayer: React.FC = () => {
         alignItems: "center",
       }}
     >
-      <input
-        type="file"
-        accept="video/*"
-        onChange={handleVideoUpload}
-        style={{ marginBottom: "20px" }}
-      />
+      <VideoUploader setVideoSrc={setVideoSrc} />
       <div>
         <video
           ref={videoRef}
@@ -80,6 +68,7 @@ export const VideoPlayer: React.FC = () => {
       <PlayerControls
         videoRef={videoRef}
         isMuted={isMuted}
+        videoSrc={videoSrc}
         setIsMuted={() => setIsMuted((prev) => !prev)}
       />
     </div>
