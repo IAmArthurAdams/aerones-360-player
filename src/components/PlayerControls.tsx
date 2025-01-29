@@ -43,14 +43,14 @@ export const PlayerControls: React.FC<Props> = ({
   return (
     <div
       style={{
-        width: "1600px",
+        width: 1600,
         backgroundColor: "#333",
         padding: "10px 0",
         display: "flex",
         justifyContent: "space-between",
       }}
     >
-      <div style={{ paddingLeft: "10px" }}>
+      <div style={{ paddingLeft: 10 }}>
         <i
           className="ri-stop-circle-fill"
           style={{ cursor: "pointer" }}
@@ -58,12 +58,12 @@ export const PlayerControls: React.FC<Props> = ({
         />
         <i
           className={isPlaying ? "ri-pause-circle-fill" : "ri-play-circle-fill"}
-          style={{ cursor: "pointer", marginLeft: "10px" }}
+          style={{ cursor: "pointer", marginLeft: 10 }}
           onClick={handlePlayPause}
         />
       </div>
 
-      <div style={{ paddingRight: "10px" }}>
+      <div style={{ paddingRight: 10 }}>
         <i
           className={isMuted ? "ri-volume-mute-fill" : "ri-volume-up-fill"}
           style={{ cursor: "pointer" }}

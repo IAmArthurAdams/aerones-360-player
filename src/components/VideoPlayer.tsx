@@ -7,10 +7,25 @@ import { VideoUploader } from "./VideoUploader";
 
 export const VideoPlayer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-
   const [isVideoReady, setIsVideoReady] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [videoSrc, setVideoSrc] = useState<string | undefined>(undefined);
+  const [currentFrame, setCurrentFrame] = useState<number>(0);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      const frameRate = 60;
+      const handleTimeUpdate = () => {
+        const currentTime = video.currentTime;
+        const frame = Math.floor(currentTime * frameRate);
+        setCurrentFrame(frame);
+      };
+
+      video.addEventListener("timeupdate", handleTimeUpdate);
+      return () => video.removeEventListener("timeupdate", handleTimeUpdate);
+    }
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -33,6 +48,7 @@ export const VideoPlayer: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        padding: "10px 0",
       }}
     >
       <VideoUploader setVideoSrc={setVideoSrc} />
@@ -50,13 +66,15 @@ export const VideoPlayer: React.FC = () => {
           style={{
             width: 1600,
             height: 750,
-            marginTop: 40,
-            cursor: "pointer",
           }}
         >
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={0.5} />
-          <VideoSphere videoRef={videoRef} isVideoReady={isVideoReady} />
+          <VideoSphere
+            videoRef={videoRef}
+            isVideoReady={isVideoReady}
+            currentFrame={currentFrame}
+          />
           <OrbitControls
             enablePan={false}
             enableZoom={false}
@@ -64,6 +82,19 @@ export const VideoPlayer: React.FC = () => {
           />
         </Canvas>
       </div>
+
+      {videoSrc && (
+        <div
+          style={{
+            position: "absolute",
+            top: 30,
+            left: 55,
+            color: "white",
+          }}
+        >
+          Current Frame: {currentFrame}
+        </div>
+      )}
 
       <PlayerControls
         videoRef={videoRef}
