@@ -43,7 +43,7 @@ export const PlayerControls: React.FC<Props> = ({
   return (
     <div
       style={{
-        width: 1600,
+        width: 1344,
         backgroundColor: "#333",
         padding: "10px 0",
         display: "flex",

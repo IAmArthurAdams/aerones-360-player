@@ -15,7 +15,7 @@ export const VideoPlayer: React.FC = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      const frameRate = 60;
+      const frameRate = 30;
       const handleTimeUpdate = () => {
         const currentTime = video.currentTime;
         const frame = Math.floor(currentTime * frameRate);
@@ -62,14 +62,11 @@ export const VideoPlayer: React.FC = () => {
         ></video>
 
         <Canvas
-          camera={{ position: [0, 0, 10], fov: 75 }}
           style={{
-            width: 1600,
-            height: 750,
+            width: 1344,
+            height: 672,
           }}
         >
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={0.5} />
           <VideoSphere
             videoRef={videoRef}
             isVideoReady={isVideoReady}

@@ -46,7 +46,7 @@ export const VideoUploader: React.FC<Props> = ({ setVideoSrc }) => {
       </button>
       {fileInputRef.current?.files
         ? `File Name: ${fileInputRef.current.files[0].name}`
-        : "Please select a video to upload from your computer."}
+        : "Please upload the test video."}
     </div>
   );
 };
