@@ -4,6 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import { VideoSphere } from "./VideoSphere";
 import { PlayerControls } from "./PlayerControls";
 import { VideoUploader } from "./VideoUploader";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, FPS } from "../utils/constants";
 
 export const VideoPlayer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -15,10 +16,9 @@ export const VideoPlayer: React.FC = () => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      const frameRate = 30;
       const handleTimeUpdate = () => {
         const currentTime = video.currentTime;
-        const frame = Math.floor(currentTime * frameRate);
+        const frame = Math.floor(currentTime * FPS);
         setCurrentFrame(frame);
       };
 
@@ -63,8 +63,8 @@ export const VideoPlayer: React.FC = () => {
 
         <Canvas
           style={{
-            width: 1344,
-            height: 672,
+            width: CANVAS_WIDTH,
+            height: CANVAS_HEIGHT,
           }}
         >
           <VideoSphere

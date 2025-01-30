@@ -6,6 +6,8 @@ import {
   BoxGeometry,
   MeshBasicMaterial,
 } from "three";
+import { useThree } from "@react-three/fiber";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, FPS } from "../utils/constants";
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -26,6 +28,7 @@ export const VideoSphere: React.FC<Props> = ({
   isVideoReady,
   currentFrame,
 }) => {
+  const { camera } = useThree();
   const meshRef = useRef<Mesh | null>(null);
   const [texture, setTexture] = useState<VideoTexture | null>(null);
   const [metadata, setMetadata] = useState<Metadata>({});
@@ -47,32 +50,26 @@ export const VideoSphere: React.FC<Props> = ({
     }
   }, [videoRef]);
 
-  //TODO: Check box styling issue
   const drawBoundingBoxes = (currentFrame: number) => {
     const annotations = Object.values(metadata);
-    const currentIndex = Math.floor(currentFrame / 30);
+    const currentIndex = Math.floor(currentFrame / FPS);
 
     const boundingBoxes = annotations[currentIndex].annotations;
     const boundingBoxMeshes: JSX.Element[] = [];
 
     if (boundingBoxes.length > 0) {
       for (const item of boundingBoxes) {
-        const color = `red`;
-        const [x, y, width, height] = item.bbox;
+        const [x, y] = item.bbox;
 
-        console.log(
-          `Drawing box at [x: ${x}, y: ${y}, width: ${width}, height: ${height}]`
-        );
-
-        const geometry = new BoxGeometry(width, height, 0.1);
+        const geometry = new BoxGeometry(1.5, 1.5, 0);
         const material = new MeshBasicMaterial({
-          color: color,
+          color: "red",
           wireframe: true,
         });
         const bboxMesh = new Mesh(geometry, material);
 
-        bboxMesh.position.set(x, y, 0);
-
+        bboxMesh.position.set(x / CANVAS_WIDTH, y / CANVAS_HEIGHT, 0);
+        bboxMesh.lookAt(camera.position);
         boundingBoxMeshes.push(
           <primitive key={Math.random()} object={bboxMesh} />
         );
