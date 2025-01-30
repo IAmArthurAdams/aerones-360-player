@@ -6,6 +6,12 @@ import { PlayerControls } from "./PlayerControls";
 import { VideoUploader } from "./VideoUploader";
 import { CANVAS_HEIGHT, CANVAS_WIDTH, FPS } from "../utils/constants";
 
+/**
+ * VideoPlayer component manages the 360-degree video playback.
+ * - Uses a hidden HTML video element to control playback.
+ * - Renders the video onto a spherical surface using Three.js.
+ * - Tracks the current frame based on FPS for metadata overlay.
+ */
 export const VideoPlayer: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isVideoReady, setIsVideoReady] = useState<boolean>(false);
@@ -13,6 +19,9 @@ export const VideoPlayer: React.FC = () => {
   const [videoSrc, setVideoSrc] = useState<string | undefined>(undefined);
   const [currentFrame, setCurrentFrame] = useState<number>(0);
 
+  /**
+   * Updates the current frame based on the video's playback time.
+   */
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
@@ -27,6 +36,9 @@ export const VideoPlayer: React.FC = () => {
     }
   }, []);
 
+  /**
+   * Sets the video as ready once it can play.
+   */
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
@@ -35,7 +47,6 @@ export const VideoPlayer: React.FC = () => {
       };
 
       video.addEventListener("canplay", handleCanPlay);
-
       return () => {
         video.removeEventListener("canplay", handleCanPlay);
       };
@@ -51,8 +62,11 @@ export const VideoPlayer: React.FC = () => {
         padding: "10px 0",
       }}
     >
+      {/* Upload button for selecting a video file */}
       <VideoUploader setVideoSrc={setVideoSrc} />
+
       <div>
+        {/* Hidden video element for controlling playback */}
         <video
           ref={videoRef}
           loop
@@ -61,6 +75,7 @@ export const VideoPlayer: React.FC = () => {
           style={{ display: "none" }}
         ></video>
 
+        {/* Three.js Canvas rendering the 360 video inside a sphere */}
         <Canvas
           style={{
             width: CANVAS_WIDTH,
@@ -80,6 +95,7 @@ export const VideoPlayer: React.FC = () => {
         </Canvas>
       </div>
 
+      {/* Display the current frame count */}
       {videoSrc && (
         <div
           style={{
@@ -93,6 +109,7 @@ export const VideoPlayer: React.FC = () => {
         </div>
       )}
 
+      {/* Custom playback controls for the video */}
       <PlayerControls
         videoRef={videoRef}
         isMuted={isMuted}

@@ -20,13 +20,13 @@ Once you've cloned the repository, navigate to the project directory and install
 ### 3. Start the Development Server
 
 Run the development server to start the application:
-`npm run dev `
+`npm run dev`
 
 The video player will be available at [http://localhost:5173/](http://localhost:5173/) in your browser.
 
 ## Video and Metadata
 
-- **Video File:** Due to the size of the video file, it has not been included in the repository. You can download the video from the following link:[Download Video](https://drive.google.com/file/d/1ziju7mIYDo5Zq6po8dNCiT7HRK_I8FqY/view)
+- **Video File:** Due to the size of the video file, it has not been included in the repository. You can download the video from the following link: [Download Video](https://drive.google.com/file/d/1ziju7mIYDo5Zq6po8dNCiT7HRK_I8FqY/view)
 - **Metadata JSON:** The required metadata JSON file is already included in the repository. No additional downloads are necessary for the metadata.
 
 ## How to Use the Video Player
@@ -43,10 +43,11 @@ The video player will be available at [http://localhost:5173/](http://localhost:
 ## Design Decisions and Assumptions
 
 - The project was built using a **React Vite** template for a quick development setup.
-- To display the 360-degree video, the video is rendered in a spherical environment, and the overlays are positioned based on normalized coordinates from the metadata.
-- The metadata JSON contains annotations for specific frames, and for each annotation, bounding boxes are drawn on the video player.
+- To display the 360-degree video, the video is rendered in a **spherical environment**, and the overlays are positioned based on normalized coordinates from the metadata.
+- The metadata JSON contains annotations for specific frames, and for each annotation, **bounding boxes** are drawn on the video player.
 - **Custom controls** were added because the original video controls are not accessible, as the video is rendered in a sphere and the native controls are hidden.
-- The **FPS (frames per second)** of the video was estimated by viewing the video in VLC and adjusting accordingly to ensure accurate frame retrieval.
+- The **FPS** of the video was estimated by viewing the video in VLC and adjusting accordingly to ensure accurate frame retrieval.
+- The **bounding boxes were matched as closely as possible** to the given metadata using calculations, but due to frame estimation and interpolation, they might not be **100% precise** for every exact frame.
 - The code was structured with **component modularity** in mind. Reasonable components were split into smaller, reusable chunks to maintain clarity and ensure maintainability.
 - **Global constants** were created where appropriate to avoid hardcoded values and to make the code more scalable.
 
