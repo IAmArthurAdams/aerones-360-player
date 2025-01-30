@@ -1,6 +1,4 @@
-# 360-Degree Video Player with Metadata Overlays
-
-## Overview
+## 360-Degree Video Player with Metadata Overlays
 
 This project is a custom 360-degree video player developed to meet the requirements of the Aerones frontend developer assignment. The player allows you to:
 
@@ -22,7 +20,7 @@ Once you've cloned the repository, navigate to the project directory and install
 ### 3. Start the Development Server
 
 Run the development server to start the application:
-`npm run dev  `
+`npm run dev `
 
 The video player will be available at [http://localhost:5173/](http://localhost:5173/) in your browser.
 
