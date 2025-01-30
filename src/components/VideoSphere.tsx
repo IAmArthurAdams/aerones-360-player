@@ -7,6 +7,7 @@ import {
   MeshBasicMaterial,
 } from "three";
 import { useThree } from "@react-three/fiber";
+import { Text } from "@react-three/drei";
 import { CANVAS_HEIGHT, CANVAS_WIDTH, FPS } from "../utils/constants";
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
 
 type MetadataEntry = {
   annotations: {
+    category_name: string;
     bbox: number[];
   }[];
 };
@@ -70,8 +72,21 @@ export const VideoSphere: React.FC<Props> = ({
 
         bboxMesh.position.set(x / CANVAS_WIDTH, y / CANVAS_HEIGHT, 0);
         bboxMesh.lookAt(camera.position);
+
         boundingBoxMeshes.push(
-          <primitive key={Math.random()} object={bboxMesh} />
+          <group key={Math.random()}>
+            <primitive object={bboxMesh} />
+            <Text
+              position={[0, 2.5, 0]}
+              color="red"
+              fontSize={0.2}
+              anchorX="center"
+              anchorY="middle"
+              onUpdate={(self) => self.lookAt(camera.position)}
+            >
+              {item.category_name}
+            </Text>
+          </group>
         );
       }
     }
